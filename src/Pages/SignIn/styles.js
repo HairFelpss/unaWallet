@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
   textButton: {
     fontSize: 15,
-    color: colors.darker,
+    color: colors.light,
     fontWeight: "bold"
   },
   text: {

@@ -6,9 +6,9 @@ import Home from "~/Pages/Home";
 const Routes = createAppContainer(
   createSwitchNavigator(
     {
-      Home,
       SignIn,
-      SignUp
+      SignUp,
+      Home
     }
     /*{
       initialRouteName: userLogged ? "Home" : "SignIn"

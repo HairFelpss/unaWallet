@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold"
   },
-  passwordContainer: {
+  formContainer: {
     alignItems: "stretch",
     flexDirection: "row",
     marginTop: metrics.baseMargin * 3,
@@ -39,6 +39,16 @@ const styles = StyleSheet.create({
     color: colors.light,
     lineHeight: 21,
     fontWeight: "bold"
+  },
+  success: {
+    color: colors.success,
+    textAlign: "center",
+    marginTop: metrics.baseMargin
+  },
+  error: {
+    color: colors.danger,
+    textAlign: "center",
+    marginTop: metrics.baseMargin
   }
 });
 
