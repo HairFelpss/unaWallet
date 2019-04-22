@@ -14,6 +14,23 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: metrics.baseMargin * 3
   },
+  formContainer: {
+    alignItems: "stretch",
+    flexDirection: "row",
+    marginTop: metrics.baseMargin * 3,
+    marginLeft: metrics.baseMargin
+  },
+  icon: {
+    justifyContent: "flex-start",
+    alignItems: "baseline",
+    color: colors.light
+  },
+  input: {
+    fontSize: 15,
+    color: colors.light,
+    height: 44,
+    paddingHorizontal: metrics.basePadding
+  },
   buttonDiv: {
     marginTop: metrics.baseMargin * 5
   },

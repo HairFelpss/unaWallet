@@ -4,14 +4,21 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import Icon5 from "react-native-vector-icons/FontAwesome5";
 import IconEntypo from "react-native-vector-icons/Entypo";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { colors, metrics } from "~/styles";
+import { metrics } from "~/styles";
 import styles from "./styles";
+
+import Firebase from "~/services/Firebase";
 
 export default class Home extends Component {
   goBack = () => {
     const { navigation } = this.props;
 
     navigation.navigate("SignIn");
+  };
+
+  logout = async () => {
+    await Firebase.auth().signOut();
+    this.goBack();
   };
   render() {
     return (
@@ -39,7 +46,7 @@ export default class Home extends Component {
             name="dollar"
             size={35}
             style={styles.icon}
-            onPress={this.goBack}
+            onPress={this.logout}
           />
         </TouchableOpacity>
 
