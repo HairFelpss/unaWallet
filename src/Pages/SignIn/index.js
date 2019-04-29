@@ -4,13 +4,14 @@ import PasswordIcon from "react-native-vector-icons/Entypo";
 import styles from "./styles";
 import { colors } from "~/styles";
 
-import Firebase from "~/services/Firebase";
+import firebase from "react-native-firebase";
 
 export default class SignIn extends Component {
   state = {
     email: "",
     password: "",
-    errorMessage: null
+    errorMessage: null,
+    isAutheticated: false
   };
 
   goTo = page => {
@@ -22,19 +23,24 @@ export default class SignIn extends Component {
   handleSignUp = () => {
     this.goTo("SignUp");
   };
-  handleLogin = () => {
+  handleLogin = async () => {
     const { email, password } = this.state;
-    Firebase.auth().signInWithEmailAndPassword(email, password);
 
-    this.goTo("Home");
+    try {
+      const user = await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password);
+
+      this.setState({ isAutheticated: true });
+
+      console.log("deu certo");
+      this.goTo("Home");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   handleGoogleLogin = () => {
-    let provider = new Firebase.auth.GoogleAuthProvider();
-    Firebase.auth()
-      .signInWithPopup(provider)
-      .then(res => {});
-
     this.goTo("Home");
   };
   render() {

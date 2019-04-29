@@ -1,7 +1,7 @@
+import "~/Config/ReactotronConfig";
 import React, { Component } from "react";
-import { AsyncStorage } from "react-native";
-import Firebase from "~/services/Firebase";
 
+import firebase from "react-native-firebase";
 import createNavigator from "./routes";
 
 export default class App extends Component {
@@ -11,7 +11,13 @@ export default class App extends Component {
   };
 
   async componentDidMount() {
-    const username = await AsyncStorage.getItem("@UnaWallet:email");
+    const username = await firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log("usuario ", user);
+      } else {
+        console.log("nao ha usuarios logados");
+      }
+    });
 
     this.setState({
       userChecked: true,

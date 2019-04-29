@@ -1,18 +1,12 @@
 import React from "react";
 import ValidationComponent from "react-native-form-validator";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  AsyncStorage
-} from "react-native";
-
-import Firebase from "~/services/Firebase";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 
 import Icon5 from "react-native-vector-icons/FontAwesome5";
 import PasswordIcon from "react-native-vector-icons/Entypo";
 import { colors } from "~/styles";
+
+import firebase from "react-native-firebase";
 
 import styles from "./styles";
 
@@ -55,9 +49,7 @@ export default class SignUp extends ValidationComponent {
         return null;
       }
 
-      Firebase.auth().createUserWithEmailAndPassword(email, password);
-
-      this.saveUser();
+      this.saveUser(email, password);
       this.GoTo("Home");
     } catch {
       //nao sei como tratar erro ainda
@@ -96,8 +88,15 @@ export default class SignUp extends ValidationComponent {
     });
   };
 
-  saveUser = async email => {
-    await AsyncStorage.setItem("@UnaWallet:email", email);
+  saveUser = async (email, password) => {
+    await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .catch(function(error) {
+        // Handle Errors here.
+        console.log("deu ruim");
+        // ...
+      });
   };
 
   render() {
