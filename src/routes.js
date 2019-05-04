@@ -8,7 +8,7 @@ import Receive from "~/Pages/Receive";
 import Settings from "~/Pages/Settings";
 import Send from "~/Pages/Send";
 import Graph from "~/Pages/Graph";
-const Routes = (userLogged = false) =>
+const Routes = authenticated =>
   createAppContainer(
     createSwitchNavigator(
       {
@@ -22,7 +22,7 @@ const Routes = (userLogged = false) =>
         Graph
       },
       {
-        initialRouteName: userLogged ? "Home" : "SignIn"
+        initialRouteName: authenticated ? "Home" : "SignIn"
       }
     )
   );

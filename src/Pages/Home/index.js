@@ -1,19 +1,45 @@
 import React, { Component } from "react";
-
+import firebase from "react-native-firebase";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import Icon5 from "react-native-vector-icons/FontAwesome5";
 import IconEntypo from "react-native-vector-icons/Entypo";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { metrics } from "~/styles";
 
-import firebase from "react-native-firebase";
-
 import styles from "./styles";
 
 export default class Home extends Component {
-  state = {
-    currentUser: false,
-    username: ""
+  constructor(props) {
+    super(props);
+    this.state = {
+      userInfo: []
+    };
+    this.handleUserInfo();
+  }
+  handleUserInfo = async () => {
+    const currentUser = await firebase.auth().currentUser;
+    const userID = currentUser.uid;
+    console.log("ta aqui");
+    const userInfo = await firebase
+      .firestore()
+      .doc(`users/${userID}`)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          return doc.data();
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+          return null;
+        }
+      })
+      .catch(function(error) {
+        return console.log("Error getting document:", error);
+      });
+    console.log("userData: ", userInfo);
+    this.setState({ userInfo: userInfo });
+    console.log("userinfo", this.state.userInfo);
+    console.log("saiu aqui");
   };
 
   goTo = page => {
@@ -22,8 +48,7 @@ export default class Home extends Component {
     navigation.navigate(page);
   };
 
-  handleCurrentUser = async () => {};
-  handleLogout = async () => {
+  handleLogout = () => {
     if (!firebase.auth().signOut()) return null;
 
     this.goTo("SignIn");
@@ -50,7 +75,7 @@ export default class Home extends Component {
   };
 
   render() {
-    const { username } = this.state;
+    const userInfo = this.state.userInfo;
     return (
       <View style={styles.container}>
         <View style={styles.iconsContainer}>
@@ -75,8 +100,7 @@ export default class Home extends Component {
             />
           </TouchableOpacity>
         </View>
-        <Text style={styles.text}>{username}</Text>
-
+        <Text style={styles.text}>{userInfo.username}</Text>
         <TouchableOpacity>
           <Icon
             name="dollar"

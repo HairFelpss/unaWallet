@@ -6,41 +6,25 @@ import createNavigator from "./routes";
 
 export default class App extends Component {
   state = {
-    userChecked: false,
-    userLogged: false
+    loading: true,
+    authenticated: false
   };
 
   async componentDidMount() {
-    const username = await firebase.auth().onAuthStateChanged(user => {
+    await firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log("usuario ", user);
+        this.setState({ loading: false, authenticated: true });
       } else {
-        console.log("nao ha usuarios logados");
+        this.setState({ loading: false, authenticated: false });
       }
-    });
-
-    this.setState({
-      userChecked: true,
-      userLogged: !!username
     });
   }
 
   render() {
-    const { userChecked, userLogged } = this.state;
-    if (!userChecked) return null;
+    const { loading, authenticated } = this.state;
+    if (loading) return null;
 
-    const Routes = createNavigator(userLogged);
+    const Routes = createNavigator(authenticated);
     return <Routes />;
   }
 }
-
-/* export default class App extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>oi</Text>
-      </View>
-    );
-  }
-}
-*/

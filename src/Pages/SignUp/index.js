@@ -1,4 +1,5 @@
 import React from "react";
+import firebase from "react-native-firebase";
 import ValidationComponent from "react-native-form-validator";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 
@@ -6,13 +7,13 @@ import Icon5 from "react-native-vector-icons/FontAwesome5";
 import PasswordIcon from "react-native-vector-icons/Entypo";
 import { colors } from "~/styles";
 
-import firebase from "react-native-firebase";
-
 import styles from "./styles";
 
 export default class SignUp extends ValidationComponent {
   state = {
     username: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -32,6 +33,8 @@ export default class SignUp extends ValidationComponent {
   handleValidate = () => {
     this.validate({
       username: { minlength: 3, required: true },
+      firstName: { required: true },
+      lastName: { required: true },
       email: { email: true, required: true },
       password: { minlength: 3, required: true }
     });
@@ -43,13 +46,13 @@ export default class SignUp extends ValidationComponent {
       this.handleUserName();
       this.handlePassword();
 
-      const { passwordChecked, usernameChecked, email, password } = this.state;
+      const { passwordChecked, usernameChecked } = this.state;
 
       if (!!passwordChecked || !!usernameChecked) {
         return null;
       }
 
-      this.saveUser(email, password);
+      this.saveUser();
       this.GoTo("Home");
     } catch {
       //nao sei como tratar erro ainda
@@ -88,16 +91,49 @@ export default class SignUp extends ValidationComponent {
     });
   };
 
-  saveUser = async (email, password) => {
+  saveUser = async () => {
+    const { email, password, username, firstName, lastName } = this.state;
     await firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .catch(function(error) {
+      .then(() => {
+        const currentUser = firebase.auth().currentUser;
+        if (currentUser != null) {
+          const fbRootRefFS = firebase.firestore();
+          const userID = currentUser.uid;
+          const userRef = fbRootRefFS.collection("users").doc(userID);
+          userRef.set({
+            email,
+            username,
+            firstName,
+            lastName
+          });
+        }
+      })
+      .catch(error => {
         // Handle Errors here.
-        console.log("deu ruim");
+        console.log("deu ruim: ", error);
         // ...
       });
   };
+  /*await firebase
+      .database()
+      .ref("UsersList/")
+      .push({
+        email,
+        username,
+        firstName,
+        lastName
+      })
+      .then(data => {
+        //success callback
+        console.log("data ", data);
+      })
+      .catch(error => {
+        //error callback
+        console.log("error ", error);
+      });
+  };*/
 
   render() {
     const {
@@ -125,9 +161,33 @@ export default class SignUp extends ValidationComponent {
         {(errorUserNameMessage && (
           <Text style={styles.error}>Nome com caracteres incorretos</Text>
         )) ||
-          (this.isFieldInError("name") && (
+          (this.isFieldInError("username") && (
             <Text style={styles.error}>Nome com caracteres incorretos</Text>
           ))}
+
+        <View style={styles.formContainer}>
+          <Icon5 name="user-graduate" size={25} style={styles.icon} />
+          <TextInput
+            style={styles.input}
+            placeholder="Digite seu primeiro nome"
+            placeholderTextColor={colors.light}
+            underlineColorAndroid="transparent"
+            onChangeText={firstName => this.setState({ firstName })}
+            value={this.state.firstName}
+          />
+        </View>
+
+        <View style={styles.formContainer}>
+          <Icon5 name="user-graduate" size={25} style={styles.icon} />
+          <TextInput
+            style={styles.input}
+            placeholder="Digite seu ultimo nome"
+            placeholderTextColor={colors.light}
+            underlineColorAndroid="transparent"
+            onChangeText={lastName => this.setState({ lastName })}
+            value={this.state.lastName}
+          />
+        </View>
 
         <View style={styles.formContainer}>
           <PasswordIcon name="email" size={25} style={styles.icon} />

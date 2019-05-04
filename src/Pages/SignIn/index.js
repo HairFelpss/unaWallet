@@ -27,9 +27,7 @@ export default class SignIn extends Component {
     const { email, password } = this.state;
 
     try {
-      const user = await firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password);
+      await firebase.auth().signInWithEmailAndPassword(email, password);
 
       this.setState({ isAutheticated: true });
 
