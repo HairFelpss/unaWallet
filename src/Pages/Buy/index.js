@@ -15,7 +15,7 @@ export default class Buy extends Component {
       <View style={styles.container}>
         <Text>Buy</Text>
         <TouchableOpacity style={styles.button} onPress={this.goTo}>
-          <Text style={styles.textButton}>Login com Google</Text>
+          <Text style={styles.textButton}>Voltar</Text>
         </TouchableOpacity>
       </View>
     );

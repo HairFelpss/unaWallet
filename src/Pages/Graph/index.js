@@ -14,7 +14,7 @@ export default class Graph extends Component {
       <View style={styles.container}>
         <Text>Graph</Text>
         <TouchableOpacity style={styles.button} onPress={this.goTo}>
-          <Text style={styles.textButton}>Login com Google</Text>
+          <Text style={styles.textButton}>Voltar</Text>
         </TouchableOpacity>
       </View>
     );
