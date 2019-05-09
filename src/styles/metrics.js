@@ -7,7 +7,7 @@ export default {
   baseMargin: 10,
   basePadding: 20,
   baseRadius: 3,
-  iconSize: 70,
+  iconSize: 35,
 
   //return the view of cellphone, landscape or portrait
   screenWidth: width < height ? width : height,

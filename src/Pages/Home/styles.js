@@ -7,23 +7,25 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     paddingLeft: metrics.basePadding * 2,
     paddingRight: metrics.basePadding * 2,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     alignItems: "center"
   },
-  iconsContainer: {
-    flexDirection: "row",
-    paddingTop: 20
+  logoContainer: {
+    paddingTop: metrics.basePadding * 2
   },
   logo: {
     borderColor: colors.light,
     borderWidth: 5,
     width: 150,
     height: 150,
-    borderRadius: 100
+    borderRadius: 100,
   },
-  icon: {
-    padding: metrics.basePadding * 2,
-    color: colors.light
+  textLogo: {
+    fontSize: 15,
+    color: colors.light,
+    textAlign: 'center',
+    fontWeight: "bold",
+    paddingTop: metrics.basePadding
   },
   unaCoinText: {
     fontSize: 30,
@@ -33,8 +35,17 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     color: colors.light,
+    textAlign: 'center',
     fontWeight: "bold"
-  }
+  },
+  iconsContainer: {
+    flexDirection: "row",
+    paddingTop: 20
+  },
+  icon: {
+    padding: metrics.basePadding,
+    color: colors.light
+  },
 });
 
 export default styles;

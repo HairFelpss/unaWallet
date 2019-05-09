@@ -36,6 +36,11 @@ export default class Settings extends Component {
     this.setState({ userInfo: userInfo });
 
   };
+  handleLogout = () => {
+    if (!firebase.auth().signOut()) return null;
+
+    this.goTo("SignIn");
+  };
 
   goTo = () => {
     const { navigation } = this.props;
@@ -83,7 +88,7 @@ export default class Settings extends Component {
       </View>
 
       <View style={styles.formContainer}>
-      <TouchableOpacity style={styles.buttonPassword} onPress={this.goTo}>
+      <TouchableOpacity style={styles.buttonPassword} onPress={this.handleLogout}>
           <Text style={styles.textButton}>Esqueci a senha</Text>
       </TouchableOpacity>
       </View>
