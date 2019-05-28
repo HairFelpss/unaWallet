@@ -4,6 +4,7 @@
  *
  * @format
  */
+const nodeLibs = require('node-libs-browser');
 
 module.exports = {
   transformer: {
@@ -14,4 +15,7 @@ module.exports = {
       },
     }),
   },
+  resolver: {
+    extraNodeModules: nodeLibs
+  }
 };
