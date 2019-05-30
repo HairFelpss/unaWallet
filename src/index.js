@@ -19,6 +19,16 @@ export default class App extends Component {
         );
 
         web3.eth.getBlock('latest').then(console.log)
+
+        const transfer = (address, quantity) => {
+            const accounts = this.web3.eth.getAccounts();
+            this.contract.methods.transfer(address, quantity).send({
+              from: accounts[0],
+              gas: '1000000'
+            });
+          }
+
+          transfer()
     }
 
 
