@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import WalletServiceService from '../../Config/web3'
+import WalletService from '../../Config/web3'
 
-class WalletService extends Component {
+class Wallet extends Component {
 
     constructor(props){
       super(props);
@@ -10,11 +10,11 @@ class WalletService extends Component {
     }
   
    async componentDidMount(){
-      const approve = WalletService.approve();
-      const transfer = WalletService.transfer();
-      const transferFrom = WalletService.transferFrom();
-      const allowance = WalletService.allowance();
-      const balance = WalletService.balanceOf(WalletService.options.address);
+      const approve = await wallet.methods.approve().call();
+      const transfer = await wallet.methods.transfer().call();
+      const transferFrom = await wallet.methods.transferFrom();
+      const allowance = await wallet.methods.allowance();
+      const balance = await web3.eth.balanceOf(wallet.options.address);
   
       this.setState({approve,transfer,transferFrom, allowance, balance});
     }
@@ -29,7 +29,7 @@ class WalletService extends Component {
     render() {
       return (
           <div>
-            <h1> Multi Party WalletService systems  </h1>
+            <h1> Multi Party wallet systems  </h1>
             <p> This is approval is requested by {this.state.approve}</p>
             <br/>
             <p> This is approval will be received By {this.state.transfer}</p>
@@ -54,4 +54,4 @@ class WalletService extends Component {
     }
   }
   
-  export default WalletService;
+  export default Wallet;
