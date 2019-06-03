@@ -1,4 +1,8 @@
-[
+import web3 from './web3';
+
+const deployeAddress = '0x1A84696DD909e41F731392a68118916D977a7dFD';
+
+const deployedAbi = [
 	{
 		"constant": true,
 		"inputs": [],
@@ -235,3 +239,5 @@
 		"type": "event"
 	}
 ]
+
+export default new web3.eth.Contract(deployedAbi,deployeAddress);

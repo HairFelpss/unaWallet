@@ -2,35 +2,14 @@
 import './global';
 import "~/Config/ReactotronConfig";
 import React, { Component } from "react";
-
 import firebase from "react-native-firebase";
 import createNavigator from "./routes";
-import Web3 from 'web3';
 
 export default class App extends Component {
     state = {
         loading: true,
         authenticated: false
     };
-
-    componentWillMount() {
-        const web3 = new Web3(
-            new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/7c761a7016e3428f8872ed02fc5b3014')
-        );
-
-        web3.eth.getBlock('latest').then(console.log)
-
-        const transfer = (address, quantity) => {
-            const accounts = this.web3.eth.getAccounts();
-            this.contract.methods.transfer(address, quantity).send({
-              from: accounts[0],
-              gas: '1000000'
-            });
-          }
-
-          transfer()
-    }
-
 
     async componentDidMount() {
         await firebase.auth().onAuthStateChanged(user => {

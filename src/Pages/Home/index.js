@@ -19,7 +19,6 @@
     handleUserInfo = async () => {
       const currentUser = await firebase.auth().currentUser;
       const userID = currentUser.uid;
-      console.log("ta aqui");
       const userInfo = await firebase
         .firestore()
         .doc(`users/${userID}`)
@@ -29,17 +28,13 @@
             return doc.data();
           } else {
             // doc.data() will be undefined in this case
-            console.log("No such document!");
             return null;
           }
         })
         .catch(function(error) {
           return console.log("Error getting document:", error);
         });
-      console.log("userData: ", userInfo);
       this.setState({ userInfo: userInfo });
-      console.log("userinfo", this.state.userInfo);
-      console.log("saiu aqui");
     };
 
     goTo = page => {
@@ -54,6 +49,9 @@
 
     goToSettings = () => {
       this.goTo("Settings");
+    };
+    goToWallet = () => {
+      this.goTo("Wallet");
     };
 
     goToBuy = () => {

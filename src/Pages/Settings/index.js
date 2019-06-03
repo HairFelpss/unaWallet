@@ -16,7 +16,6 @@ export default class Settings extends Component {
   handleUserInfo = async () => {
     const currentUser = await firebase.auth().currentUser;
     const userID = currentUser.uid;
-    console.log("ta aqui");
     const userInfo = await firebase
       .firestore()
       .doc(`users/${userID}`)

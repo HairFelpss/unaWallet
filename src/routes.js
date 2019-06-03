@@ -8,6 +8,7 @@ import Receive from "~/Pages/Receive";
 import Settings from "~/Pages/Settings";
 import Send from "~/Pages/Send";
 import Graph from "~/Pages/Graph";
+import Wallet from "~/Pages/Wallet";
 const Routes = authenticated =>
   createAppContainer(
     createSwitchNavigator(
@@ -19,7 +20,8 @@ const Routes = authenticated =>
         Receive,
         Settings,
         Send,
-        Graph
+        Graph,
+        Wallet
       },
       {
         initialRouteName: authenticated ? "Home" : "SignIn"

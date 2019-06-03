@@ -24,7 +24,6 @@ export default class Receive extends Component {
   handleWalletInfo = async () => {
     const currentUser = await firebase.auth().currentUser;
     const userID = currentUser.uid;
-    console.log(userID)
     this.setState({userWallet: userID})
   } 
 
